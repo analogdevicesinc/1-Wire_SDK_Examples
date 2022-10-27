@@ -20,21 +20,27 @@ This is a C# graphical user interface (GUI) for Windows 10 x64, specifically to 
 ## Operation or Software Flow
 When run, the GUI software will do the following before the main Window appears:
 1.	Automatically discover the first 1-Wire adapter it can.  This is done by first looking to see if a DS9490R 1-Wire USB adapter exists on “USB1”.  USB1 is mapped as a copy of the first Windows “handle” to the hardware device that was most recently plugged in. If it doesn’t find one there, it will attempt to find a DS9481R-3C7 serial port 1-Wire adapter on COM1 through COM64. If no adapters are found, the GUI will generate a “MessageBox” error message before the main Window appears and before the Splash Screen is visible (see step 2). Figure 1 shows the error message.
-![Figure 1.  No Adapter Found Error.](./images/Adapter_Not_Found.png) 
-*Figure 1.  No Adapter Found Error.*
+
+    ![Figure 1.  No Adapter Found Error.](./images/Adapter_Not_Found.png) 
+ 
+    *Figure 1.  No Adapter Found Error.*
 
 2.	The GUI will display a splash screen before the main window appears (using the LookAndFeel.dll).  It will appear for 3 seconds and give the name of the software, along with copyright information, version information, and how to contact Analog Devices. It also has a checkbox that a user can check to disable the splash screen as needed. Figure 2 shows the splash screen. To re-enable the splash screen, the user can click the “About” menu item from the main menu of the main GUI window as shown in Figure 3 below. This is the same splash screen but dismisses with a click of the “OK” button.
 
     ![Figure 2.  Splash Screen on Startup.](./images/SplashScreen.png)  	 
+ 
     Figure 2.  Splash Screen on Startup. 		
 
     ![Figure 3. About Screen with OK Button](./images/SplashScreenOK.png)  	 
+ 
     Figure 3. About Screen with OK Button
+
 
 When the main Window appears, it will contain 3 text edit boxes vertically aligned, along with 2 buttons to go with the read and write events.  See Figure 4 below.
 
-![Figure 4.  GUI Main Window](./images/GUI_Screenshot.png)   
-    Figure 4.  GUI Main Window
+   ![Figure 4.  GUI Main Window](./images/GUI_Screenshot.png)   
+
+   Figure 4.  GUI Main Window
 
 ### Reading
 The top button is the “read” button.  When clicked, the program discovers all 1-Wire devices connected on the 1-Wire bus, reads the entire user memory contents of the devices that are equivalent to the DS2431 (i.e., DS1972 or DS28E07), and displays the entire memory contents in hexadecimal form (no spaces) in the topmost text box labeled “Read All Devices”.  See Figure 4 for the Main Window, the button labeled “Read” and the “Read All Devices” text box.  
