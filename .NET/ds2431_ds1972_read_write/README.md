@@ -15,7 +15,7 @@ This is a C# graphical user interface (GUI) for Windows 10 x64, specifically to 
 -  Before installing the 1-Wire Drivers, make sure the adapter is unplugged.  For extra 1-Wire Drivers help see this [troubleshooting guide](https://maximsupport.microsoftcrmportals.com/en-us/knowledgebase/article/KA-16429).
 
 ## Downloading and Running
-- From this GitHub page, click the Code button followed by the "Download Zip" option.
+- From this GitHub page, click the [1-Wire_SDK_Examples](https://github.com/MaximIntegratedTechSupport/1-Wire_SDK_Examples) link and then click the Code button followed by the "Download Zip" option.  Unzip the downloaded file and find the executable and double-click.
   
 ## Operation or Software Flow
 When run, the GUI software will do the following before the main Window appears:
