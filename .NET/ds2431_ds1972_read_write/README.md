@@ -55,5 +55,5 @@ The “Write” button, when clicked, discovers all DS2431-equivalent 1-Wire dev
 
 ## Limitations
 -	Testing was done only on Windows 10 x64.
--	Only DS2431 were tested.
+-	Only DS2431 devices were tested.
 -	No reading and writing to the protection register of the DS2431 takes place.
