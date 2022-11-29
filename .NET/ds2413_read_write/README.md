@@ -10,9 +10,11 @@ This is a C# graphical user interface (GUI) for Windows 10 x64, specifically to 
 -	Connect the 1-Wire adapter of choice to the PC on a spare USB port. Plug the RJ12 cable into the adapter with the other end plugged into DS9120P+.  Insert 2 DS2413 devices into the clamshell socket.  Use the test circuit materials to create the circuit in Figure 1 below. A picture of the test circuit on a breadboard is shown in Figure 2.
 
     ![Figure 1](./images/DS2413TypicalOperatingCircuit.png) 
+    
     *Figure 1.  DS2413 Test Circuit Taken from Page 1 of Data Sheet.*
 
     ![Figure 2](./images/Test_Setup_Breadboard.png) 
+    
     *Figure 2.  DS2413 Test Circuit on Breadboard.*    
  
 ## Software Development Tools and Dependencies
@@ -56,6 +58,6 @@ When the PIOA or PIOB Latch State GUI Toggle switch is clicked, the program shal
 The button labeled “PIO Read” on the GUI (see Figure 5) simply performs a PIO Access Read command sequence and reads the states of both switches, including latch states and pin states, and updates the GUI to show what these are (i.e., the GUI toggle switches, and the GUI radio boxes).  
 
 ### Other GUI Functions 
-1.	The Status Bar. This is at the very bottom of the main Window and shall either display “No Adapter Found” or the adapter and port, such as “{DS9490} USB1” connected as shown in Figure 4.
-2.	Main Menu.  See Figure 4. This is located at the top of the main window and consists of “File” and “About” menu items.  When clicking File, it will present a sub menu item called “Exit”.  This shall cause the program to exit.  Clicking About will cause the “About Screen” to appear as shown in Figure 3.
+1.	The Status Bar. This is at the very bottom of the main Window and shall either display “No Adapter Found” or the adapter and port, such as “{DS9490} USB1” connected as shown in Figure 6.
+2.	Main Menu.  See Figure 6. This is located at the top of the main window and consists of “File” and “About” menu items.  When clicking File, it will present a sub menu item called “Exit”.  This causes the program to exit.  Clicking "About" causes the “About Screen” to appear as shown in Figure 5.
 
