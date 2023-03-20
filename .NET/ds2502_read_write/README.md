@@ -9,6 +9,7 @@ This is a C# graphical user interface (GUI) for Windows 10 x64, specifically to 
 
 ## Hardware Setup
 Connect the 1-Wire adapter to the PC on a spare USB port. Connect one end of the cable to the adapter and the other end should be connected to the DS2502-equivalent device(s) either through a socket board or through snapping iButton devices to the cable. See Figure 1 below for an example hardware setup with iButton devices.
+
    ![Figure 1. Hardware Setup.](./images/DS2502_Test_Setup.png) 
    
    *Figure 1. Hardware Setup.*
