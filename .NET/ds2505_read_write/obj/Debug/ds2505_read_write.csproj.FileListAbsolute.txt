@@ -1,0 +1,13 @@
+C:\Users\BHindman\TempWorkspace\GitHubDesktop\1-Wire_SDK_Examples\.NET\ds2505_read_write\bin\Debug\ds2505_read_write.exe.config
+C:\Users\BHindman\TempWorkspace\GitHubDesktop\1-Wire_SDK_Examples\.NET\ds2505_read_write\bin\Debug\ds2505_read_write.exe
+C:\Users\BHindman\TempWorkspace\GitHubDesktop\1-Wire_SDK_Examples\.NET\ds2505_read_write\bin\Debug\ds2505_read_write.pdb
+C:\Users\BHindman\TempWorkspace\GitHubDesktop\1-Wire_SDK_Examples\.NET\ds2505_read_write\bin\Debug\LookAndFeel.dll
+C:\Users\BHindman\TempWorkspace\GitHubDesktop\1-Wire_SDK_Examples\.NET\ds2505_read_write\bin\Debug\OneWireLinkLayer.dll
+C:\Users\BHindman\TempWorkspace\GitHubDesktop\1-Wire_SDK_Examples\.NET\ds2505_read_write\obj\Debug\ds2505_read_write.csprojAssemblyReference.cache
+C:\Users\BHindman\TempWorkspace\GitHubDesktop\1-Wire_SDK_Examples\.NET\ds2505_read_write\obj\Debug\ds2505_read_write.form_ds2505_read_write.resources
+C:\Users\BHindman\TempWorkspace\GitHubDesktop\1-Wire_SDK_Examples\.NET\ds2505_read_write\obj\Debug\ds2505_read_write.ADISplashScreenForm.resources
+C:\Users\BHindman\TempWorkspace\GitHubDesktop\1-Wire_SDK_Examples\.NET\ds2505_read_write\obj\Debug\ds2505_read_write.csproj.GenerateResource.cache
+C:\Users\BHindman\TempWorkspace\GitHubDesktop\1-Wire_SDK_Examples\.NET\ds2505_read_write\obj\Debug\ds2505_read_write.csproj.CoreCompileInputs.cache
+C:\Users\BHindman\TempWorkspace\GitHubDesktop\1-Wire_SDK_Examples\.NET\ds2505_read_write\obj\Debug\ds2505_read_write.csproj.CopyComplete
+C:\Users\BHindman\TempWorkspace\GitHubDesktop\1-Wire_SDK_Examples\.NET\ds2505_read_write\obj\Debug\ds2505_read_write.exe
+C:\Users\BHindman\TempWorkspace\GitHubDesktop\1-Wire_SDK_Examples\.NET\ds2505_read_write\obj\Debug\ds2505_read_write.pdb
