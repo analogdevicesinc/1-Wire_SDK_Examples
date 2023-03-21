@@ -7,6 +7,8 @@ This is a C# graphical user interface (GUI) for Windows 10 x64, specifically to 
 -   An appropriate 1-Wire socket board and cable to hold the DS2505-equivalent package and connect to the 1-Wire PC adapter.  For 1-Wire socket boards, see the [DS9120 family of boards](https://www.analog.com/en/design-center/evaluation-hardware-and-software/evaluation-boards-kits/ds9120.html#eb-overview). They come with an appropriate interconnect cable (RJ12 male-to-male). For iButton devices, see the [DS1402D-DR8 1-Wire cable](https://www.analog.com/en/products/ds1402d-dr8.html) that holds 2 iButton devices on one end and plugs into a 1-Wire PC adapter on the other.
 -	A 1-Wire PC adapter.  Use the [DS9481R-3C7 USB-to-Serial 1-Wire adapter](https://www.analog.com/en/design-center/evaluation-hardware-and-software/evaluation-boards-kits/ds9481r-3c7.html). It is the only adapter that can be used to both read and write from/to the part. The [DS9490R# USB-to-1-Wire PC adapter](https://www.maximintegrated.com/en/products/ibutton-one-wire/ibutton/DS9490R.html) can only be used to read as it does not provide 12V for writing to the EPROM memory.
 - Connect the 1-Wire adapter to the PC on a spare USB port. Connect one end of the cable to the adapter and the other end should be connected to the DS2505-equivalent device(s) either through a socket board or through snapping iButton devices to the cable. See Figure 1 below for an example hardware setup with iButton devices.
+
+
    ![Figure 1. Hardware Setup.](./images/DS2505_Test_Setup.png) 
    
    *Figure 1. Hardware Setup.*
