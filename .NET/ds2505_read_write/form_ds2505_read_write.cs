@@ -74,7 +74,7 @@ namespace ds2505_read_write
       public const int DS2505_ROMID_SIZE = 8; // 8 bytes
 
       public PortAdapter adapter = null;  // Declare port adapter
-      Timer timer = new Timer(); // Creates timer for splash screen to display for 3 seconds
+
       public ADISplashScreenForm adiSplashScreen = null; 
 
       private System.Windows.Forms.TextBox textBoxReadResults;
@@ -88,8 +88,8 @@ namespace ds2505_read_write
       private Label labelLog;
       private MenuStrip menuStrip1;
       private ToolStripMenuItem fileToolStripMenuItem;
-      private ToolStripMenuItem exitToolStripMenuItem;
       private ToolStripMenuItem aboutToolStripMenuItem;
+      private ToolStripMenuItem exitToolStripMenuItem;
 
       /// <summary>
       /// Required designer variable.
@@ -107,12 +107,13 @@ namespace ds2505_read_write
 			// TODO: Add any constructor code after InitializeComponent call
 			//	            
 		}
-	
 
-		/// <summary>
-		/// Clean up any resources being used.
-		/// </summary>
-		protected override void Dispose( bool disposing )
+
+      /// <summary>
+      /// Clean up any resources being used.
+      /// </summary>
+      /// <param name="disposing">todo: describe disposing parameter on Dispose</param>
+      protected override void Dispose( bool disposing )
 		{
 			if( disposing )
 			{
@@ -244,7 +245,6 @@ namespace ds2505_read_write
          this.menuStrip1.Name = "menuStrip1";
          this.menuStrip1.Size = new System.Drawing.Size(486, 24);
          this.menuStrip1.TabIndex = 9;
-         this.menuStrip1.Text = "menuStrip1";
          // 
          // fileToolStripMenuItem
          // 
@@ -325,8 +325,8 @@ namespace ds2505_read_write
       ****************************************************************************/
       private static string Print1WireHexAddress(byte[] buff)
 		{
-			System.Text.StringBuilder sb = new System.Text.StringBuilder(buff.Length*3);
-			for(int i=7; i>-1; i--)
+			var sb = new System.Text.StringBuilder(buff.Length*3);
+         for (int i=7; i>-1; i--)
 			{
 				sb.Append(buff[i].ToString("X2"));
 			}
@@ -342,7 +342,7 @@ namespace ds2505_read_write
       ****************************************************************************/
       private static string Print1WireHexBytes(byte[] buff, int ValuesPerLine)
       {
-         System.Text.StringBuilder sb = new System.Text.StringBuilder(buff.Length * 2);
+         var sb = new System.Text.StringBuilder(buff.Length * 2);
          for (int i = 0; i < buff.Length; i++)
          {
                if (i % ValuesPerLine == 0) sb.Append(Environment.NewLine);
@@ -371,7 +371,7 @@ namespace ds2505_read_write
          }
          catch (Exception ex)
          {
-            string exceptionString = ex.Message;
+            var exceptionString = ex.Message;
             MessageBox.Show("1-Wire PC adapter not found or loaded. Close this \n" +
                             "program and check if a 1-Wire adapter is plugged in \n");
             statusBarAdapter.Text = "Not Loaded";
@@ -390,10 +390,10 @@ namespace ds2505_read_write
 
       /**
       * @brief        getFirstAdapterFound() takes string and removes all spaces, line endings, and line separators.
-      * @pre          This gets called in form_ds2432_ds1972_read_write_Load() to auto-detect the adapters.
+      * @pre          This gets called in form_ds2505_read_write_Load() to auto-detect the adapters.
       * @return       The PortAdapter found or null.
       ****************************************************************************/
-      private PortAdapter getFirstAdapterFound()
+      private static PortAdapter getFirstAdapterFound()
       {
          PortAdapter adapter = null;
          string exmessage = null;
@@ -452,7 +452,7 @@ namespace ds2505_read_write
       ****************************************************************************/
       public static int GetHexVal(char hex)
       {
-         int val = (int)hex;
+         var val = (int)hex;
          //For uppercase A-F letters:
          //return val - (val < 58 ? 48 : 55);
          //For lowercase a-f letters:
@@ -472,8 +472,8 @@ namespace ds2505_read_write
          {
             return value;
          }
-         string lineSeparator = ((char)0x2028).ToString();
-         string paragraphSeparator = ((char)0x2029).ToString();
+         var lineSeparator = ((char)0x2028).ToString();
+         var paragraphSeparator = ((char)0x2029).ToString();
 
          return value.Replace(" ", string.Empty).Replace("\r\n", string.Empty).Replace("\n", string.Empty).Replace("\r", string.Empty).Replace(lineSeparator, string.Empty).Replace(paragraphSeparator, string.Empty);
       }
@@ -497,15 +497,15 @@ namespace ds2505_read_write
       {
          byte TA1 = 0;
          byte TA2 = 0;
-         int databyte = 0x00;
-         int databytecheck = 0x00;
+         var databyte = 0x00;
+         var databytecheck = 0x00;
          uint crc = 0x00;
          byte crc_high = 0x00;
          byte crc_low = 0x00;
          uint crc_calc = 0x00;
-         byte[] crc_array = new byte[4];
-         byte[] crc_array_subsequent = new byte[3];
-         int index = 0;
+         var crc_array = new byte[4];
+         var crc_array_subsequent = new byte[3];
+         var index = 0;
 
          if (length == 0) return false;
 
@@ -545,10 +545,9 @@ namespace ds2505_read_write
                return false;
             }
          }
-            // start 12V pulse
-            writeadapter.SetProgramPulseDuration(OWPowerTime.DELIVERY_EPROM);
+         // start 12V pulse
+         writeadapter.SetProgramPulseDuration(OWPowerTime.DELIVERY_EPROM);
          writeadapter.StartProgramPulse(OWPowerStart.CONDITION_NOW);
-         //System.Threading.Thread.Sleep(1); // not sure this is needed.
 
          // get databyte back from part
          databytecheck = writeadapter.GetByte();
@@ -576,12 +575,10 @@ namespace ds2505_read_write
                if (memory_command == DS2505_WRITE_MEMORY)
                {
                   // calculate crc to compare with later
-                  // potential datasheet clarification needed when calculating subsequent CRC16s
-                  // Here, CRC16 is of the databyte to write seeded with the new address
+                  // Here, CRC16 is the databyte to write seeded with the new address
                   crc_calc = CRC16.Compute((uint)databyte, (uint)address); // CRC16 of databyte seeded to address
                   crc_calc = ~crc_calc & 0x0000FFFF; // the CRC16.Compute() method output needs to be inverted.
 
-                  //crc = (uint)writeadapter.GetByte(); // crc to receive back from DS2505
                   crc_low = (byte)writeadapter.GetByte(); // get MSB of crc16 from device
                   crc_high = (byte)writeadapter.GetByte(); // get LSB of crc16 from device
                   crc = (uint)crc_high << 8;
@@ -596,7 +593,6 @@ namespace ds2505_read_write
                // Since CRCs match, start 12V pulse
                writeadapter.SetProgramPulseDuration(OWPowerTime.DELIVERY_EPROM);
                writeadapter.StartProgramPulse(OWPowerStart.CONDITION_NOW);
-               //System.Threading.Thread.Sleep(1); // not sure if needed
 
                // get databyte back from part
                databytecheck = writeadapter.GetByte();
@@ -614,132 +610,6 @@ namespace ds2505_read_write
       }
 
       /**
-      * @brief        WriteBufferToDS2505Fast() This function performs the steps to write to a part. It performs  
-      *               like the WriteBufferToDS2505 but CRC steps are ommitted, speeding up the write process.
-      *               It uses SPEED WRITE MEMORY [F3] instead of the normal WRITE MEMORY [0F].
-      * @param[in]    writeadapter.  The PortAdapter object representing the 1-Wire adapter. Should not be null.
-      * @param[in]    bytebuffer. The bytes to write to the device.
-      * @param[in]    length. An integer giving the length of the bytebuffer array (how many bytes).
-      * @param[in]    romid (a.k.a. "1-Wire address"). The 8-byte serial number of the device.
-      * @param[in]    integer. Memory address to write. 
-      * @return       boolean. True if successful. False if unsuccessful.
-      ****************************************************************************/
-      public static bool WriteBufferToDS2505Fast(PortAdapter writeadapter, byte[] bytebuffer, int length, byte[] romid, int address)
-      {
-         byte TA1 = 0;
-         byte TA2 = 0;
-         int databyte = 0x00;
-         int databytecheck = 0x00;
-         uint crc = 0x00;
-         byte crc_high = 0x00;
-         byte crc_low = 0x00;
-         uint crc_calc = 0x00;
-         byte[] crc_array = new byte[4];
-         byte[] crc_array_subsequent = new byte[3];
-         int index = 0;
-
-         if (length == 0) return false;
-
-         //set pulse duration
-         writeadapter.SetProgramPulseDuration(OWPowerTime.DELIVERY_EPROM);
-
-         TA2 = (byte)(address >> 8);
-         TA1 = (byte)(address & 0xFF);
-
-         // Perform a write first pass 
-         writeadapter.SelectDevice(romid, 0); // performs a match rom followed by reset
-         writeadapter.PutByte(DS2505_WRITE_MEMORY); // send write memory command
-         writeadapter.PutByte(TA1); // first memory address byte T7:0
-         writeadapter.PutByte(TA2); // second memory byte T15:8 of the address to which to write
-         databyte = bytebuffer[index];
-         index++;
-
-         writeadapter.PutByte(databyte); // send databyte to EPROM
-
-         crc_low = (byte)writeadapter.GetByte(); // get MSB of crc16 from device
-         crc_high = (byte)writeadapter.GetByte(); // get LSB of crc16 from device
-         crc = (uint)crc_high << 8;
-         crc = crc + crc_low;
-
-         // calculate crc16
-         crc_array[0] = DS2505_WRITE_MEMORY;
-         crc_array[1] = TA1;
-         crc_array[2] = TA2;
-         crc_array[3] = bytebuffer[0];
-         crc_calc = CRC16.Compute(crc_array, 0x00);
-         crc_calc = ~crc_calc & 0x0000FFFF; // the CRC16.Compute() method output needs to be inverted.
-
-         if (crc != crc_calc)
-         {
-            return false;
-         }
-
-         // start 12V pulse
-         writeadapter.SetProgramPulseDuration(OWPowerTime.DELIVERY_EPROM);
-         writeadapter.StartProgramPulse(OWPowerStart.CONDITION_NOW);
-
-         // get databyte back from part
-         databytecheck = writeadapter.GetByte();
-         // compare databyte sent with databyte received and fail the subroutine if they do not match
-         if (databyte != databytecheck)
-         {
-            return false; // fail
-         }
-
-         // increment address
-         address = address + 1;
-
-         if (length > 1)
-         {
-            // do repeated program bytes
-            while (address < DS2505_MEMORY_SIZE && index < length)
-            {
-               // Perform a write subsequent byte 
-               databyte = bytebuffer[index]; // byte to send
-               index++;
-
-               // calculate crc to compare with later
-               // potential datasheet clarification needed when calculating subsequent CRC16s
-               // Here, CRC16 is of the databyte to write seeded with the new address
-               crc_calc = CRC16.Compute((uint)databyte, (uint)address); // CRC16 of databyte seeded to address
-               crc_calc = ~crc_calc & 0x0000FFFF; // the CRC16.Compute() method output needs to be inverted.
-
-               // send byte to write followed by reading the crc from the DS2505.
-               writeadapter.PutByte(databyte); // send byte to write on 1-Wire line
-               //crc = (uint)writeadapter.GetByte(); // crc to receive back from DS2505
-               crc_low = (byte)writeadapter.GetByte(); // get MSB of crc16 from device
-               crc_high = (byte)writeadapter.GetByte(); // get LSB of crc16 from device
-               crc = (uint)crc_high << 8;
-               crc = crc + crc_low;
-
-               // compare CRCs and fail the subroutine if they do not match
-               if (crc != crc_calc)
-               {
-                  return false; // fail
-               }
-
-               // Since CRCs match, start 12V pulse
-               writeadapter.SetProgramPulseDuration(OWPowerTime.DELIVERY_EPROM);
-               writeadapter.StartProgramPulse(OWPowerStart.CONDITION_NOW);
-               //System.Threading.Thread.Sleep(1); // not sure if needed
-
-               // get databyte back from part
-               databytecheck = writeadapter.GetByte();
-               // compare databyte sent with databyte received and fail the subroutine if they do not match
-               if (databyte != databytecheck)
-               {
-                  return false; // fail
-               }
-
-               // increment address
-               address = address + 1;
-            }
-         }
-         return true;
-      }
-
-
-      /**
       * @brief        buttonWrite_Click() event gets called when the "write" button 
       *               gets clicked. This event is where the string data found in the  
       *               hex input box gets converted to a byte array and then written 
@@ -750,15 +620,16 @@ namespace ds2505_read_write
       private void buttonWrite_Click(object sender, EventArgs e)
       {
          // create a buffer to write
-         byte[] readbuffer = new byte[32];
+         var readbuffer = new byte[32];
          byte[] writebuffer;
+         var devicesFound = false;
 
          // first, get the hexadecimal string to write to part from the text box.
-         string hexString = textBoxWriteResults.Text;
+         var hexString = textBoxWriteResults.Text;
          hexString = hexString.Trim();
          hexString = RemoveLineEndings(hexString);
          writebuffer = HexStringToByteArray(hexString);
-         int numofpages = writebuffer.Length / 32;
+         var numofpages = writebuffer.Length / 32;
 
          if (adapter != null)
          {
@@ -774,7 +645,7 @@ namespace ds2505_read_write
                textBoxLogResults.AppendText(Environment.NewLine + "1-Wire List:" + Environment.NewLine);
                textBoxLogResults.AppendText("=================" + Environment.NewLine);
                // get 1-Wire Addresses
-               byte[] address = new byte[DS2505_ROMID_SIZE];
+               var address = new byte[DS2505_ROMID_SIZE];
                // get the first 1-Wire device's address
                // keep in mind the first device is not necessarily the first 
                // device physically located on the network.
@@ -785,6 +656,7 @@ namespace ds2505_read_write
                      textBoxLogResults.AppendText(Print1WireHexAddress(address) + Environment.NewLine);
                      if (address[0] == DS2505_FAMILY_CODE) // is this a DS2505 or DS1985?
                      {
+                        devicesFound = true;
                         if (WriteBufferToDS2505(adapter, writebuffer, writebuffer.Length, address, 0, DS2505_SPEED_WRITE_MEMORY)) // start at address 0
                         {
                            // success!
@@ -800,6 +672,10 @@ namespace ds2505_read_write
                      }
                   }
                   while (adapter.GetNextDevice(address, 0));
+               }
+               if (!devicesFound)
+               {
+                  MessageBox.Show("No DS2505/DS1985 devices found! \n" + "Connect some devices and try again.\n", "No Device Found");
                }
                // end exclusive use of resource
                adapter.EndExclusive();
@@ -824,8 +700,9 @@ namespace ds2505_read_write
       ****************************************************************************/
       private void buttonRead_Click(object sender, EventArgs e)
       {
-         byte[] readbuffer = new byte[DS2505_MEMORY_SIZE];
-         byte[] crc_calc_array = new byte[DS2505_MEMORY_SIZE +3];
+         var readbuffer = new byte[DS2505_MEMORY_SIZE];
+         var crc_calc_array = new byte[DS2505_MEMORY_SIZE +3];
+         var devicesFound = false;
 
          if (adapter != null)
          {
@@ -842,7 +719,7 @@ namespace ds2505_read_write
                textBoxLogResults.AppendText("=================" + Environment.NewLine);
 
                // get 1-Wire Addresses
-               byte[] address = new byte[DS2505_ROMID_SIZE];
+               var address = new byte[DS2505_ROMID_SIZE];
                // get the first 1-Wire device's address
                // keep in mind the first device is not necessarily the first 
                // device physically located on the network.
@@ -854,6 +731,7 @@ namespace ds2505_read_write
                      textBoxLogResults.AppendText(Print1WireHexAddress(address) + Environment.NewLine);
                      if (address[0] == DS2505_FAMILY_CODE)
                      {
+                        devicesFound = true;
                         // Perform a read and then write data
                         adapter.PutByte(DS2505_READ_MEMORY); // send read memory command
                         adapter.PutByte(0x00); // first memory address byte 
@@ -872,6 +750,10 @@ namespace ds2505_read_write
                           
                   }
                   while (adapter.GetNextDevice(address, 0));
+               }
+               if (!devicesFound)
+               {
+                  MessageBox.Show("No DS2505/DS1985 devices found! \n" + "Connect some devices and try again.\n", "No Device Found");
                }
                // end exclusive use of resource
                adapter.EndExclusive();
