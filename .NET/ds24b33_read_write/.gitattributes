@@ -1,9 +1,0 @@
-# Auto detect text files and perform LF normalization
-* text=auto
-*.sys binary
-*.dll binary
-*.cat binary
-*.exe binary
-*.vsto binary
-*.deploy binary
-*.manifest binary
