@@ -261,7 +261,7 @@ namespace ds28ec20_read_write
          // exitToolStripMenuItem
          // 
          this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-         this.exitToolStripMenuItem.Size = new System.Drawing.Size(252, 30);
+         this.exitToolStripMenuItem.Size = new System.Drawing.Size(123, 30);
          this.exitToolStripMenuItem.Text = "E&xit";
          this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
          // 
@@ -274,6 +274,7 @@ namespace ds28ec20_read_write
          // 
          // groupBoxSpeed
          // 
+         this.groupBoxSpeed.BackColor = System.Drawing.SystemColors.Control;
          this.groupBoxSpeed.BackgroundColor = System.Drawing.SystemColors.Control;
          this.groupBoxSpeed.Controls.Add(this.radioButtonStandard);
          this.groupBoxSpeed.Controls.Add(this.radioButtonOverdrive);
@@ -299,6 +300,7 @@ namespace ds28ec20_read_write
          this.radioButtonStandard.TabStop = true;
          this.radioButtonStandard.Text = "Standard";
          this.radioButtonStandard.UseVisualStyleBackColor = true;
+         this.radioButtonStandard.CheckedChanged += new System.EventHandler(this.radioButtonStandard_CheckedChanged);
          // 
          // radioButtonOverdrive
          // 
@@ -476,7 +478,21 @@ namespace ds28ec20_read_write
          {
             // getFirstAdapterFound() either gets the first adapter found or returns null.
             adapter = getFirstAdapterFound();
+            if (radioButtonStandard.Checked == true)
+            {
+               adapter.Reset();
+               adapter.PutByte(0x3C);
+               adapter.Speed = OWSpeed.SPEED_OVERDRIVE;
 
+               adapter.Speed = OWSpeed.SPEED_REGULAR;
+               adapter.PutByte(0xCC);
+               adapter.Reset();
+            }
+            else
+            {
+               adapter.PutByte(0x3C);
+               adapter.Speed = OWSpeed.SPEED_OVERDRIVE;
+            }
             statusBarAdapter.Text = adapter.ToString();
          }
          catch (Exception ex)
@@ -588,7 +604,7 @@ namespace ds28ec20_read_write
                // clear any previous search restrictions
                adapter.SetSearchAllDevices();
                adapter.TargetAllFamilies();
-               adapter.Speed = OWSpeed.SPEED_REGULAR;
+               //adapter.Speed = OWSpeed.SPEED_REGULAR;
                // print header to text box
                textBoxActivityLog.AppendText(Environment.NewLine + "1-Wire List:" + Environment.NewLine);
                textBoxActivityLog.AppendText("=================" + Environment.NewLine);
@@ -787,7 +803,6 @@ namespace ds28ec20_read_write
                // clear any previous search restrictions
                adapter.SetSearchAllDevices();
                adapter.TargetAllFamilies();
-               adapter.Speed = OWSpeed.SPEED_REGULAR;
                // print header to text box
                textBoxActivityLog.AppendText(Environment.NewLine + "1-Wire List:" + Environment.NewLine);
                textBoxActivityLog.AppendText("=================" + Environment.NewLine);
@@ -862,6 +877,31 @@ namespace ds28ec20_read_write
       {
          adiSplashScreen = new ADISplashScreenForm(getProgramVersion(), false); // create splashscreen with no timer
          ShowSplashScreen();
+      }
+
+      private void radioButtonStandard_CheckedChanged(object sender, EventArgs e)
+      {
+         //string strSpeed = ("before speed = " + adapter.Speed);
+         //MessageBox.Show(strSpeed, "Message");
+         if (radioButtonStandard.Checked == true)
+         {
+            adapter.Reset();
+            adapter.Speed = OWSpeed.SPEED_REGULAR;
+            adapter.PutByte(0xCC);
+            adapter.Reset();
+            adapter.PutByte(0xCC);
+            adapter.Speed = OWSpeed.SPEED_REGULAR;
+         }
+         else
+         {
+
+            adapter.Reset();
+            adapter.PutByte(0x3C);
+            adapter.Speed = OWSpeed.SPEED_OVERDRIVE;
+
+         }
+         //strSpeed = ("after speed = " + adapter.Speed);
+         //MessageBox.Show(strSpeed, "Message");
       }
    }
 }
