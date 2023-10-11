@@ -28,8 +28,8 @@ using System.Runtime.CompilerServices;
 //
 // [assembly: AssemblyVersion("1.0.")]
 
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("1.0.0.1")]
+[assembly: AssemblyFileVersion("1.0.0.1")]
 
 //
 // In order to sign your assembly you must specify a key to use. Refer to the 

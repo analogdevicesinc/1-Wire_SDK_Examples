@@ -67,7 +67,7 @@ namespace ds2431_ds1972_read_write
       public const byte DS2431_WRITE_SCRATCHPAD = 0x0F;
       public const byte DS2431_READ_SCRATCHPAD = 0xAA;
       public const byte DS2431_COPY_SCRATCHPAD = 0x55;
-      public const byte DS2431_TPROG = 10; // program time for copy scratchpad in milliseconds
+      public const byte DS2431_TPROG = 12; // program time for copy scratchpad in milliseconds -- setup for the slower DS28E07 at 12ms
       public const int DS2431_MEMORY_SIZE = 128; // number of bytes of user memmory in the DS2431
       public const int DS2431_SCRATCHPAD_SIZE = 8; // 8 bytes
       public const int DS2431_ROMID_SIZE = 8; // 8 bytes
@@ -620,7 +620,10 @@ namespace ds2431_ds1972_read_write
          CRC2 = (byte)adapter.GetByte();
 
          // Perform read scratchpad to validate the data
-         adapter.SelectDevice(address, 0); // reset + match rom
+
+         //adapter.SelectDevice(address, 0); // reset + match rom
+         adapter.Reset();
+         adapter.PutByte(0xA5); // resume
          adapter.PutByte(DS2431_READ_SCRATCHPAD); // send read scratchpad memory command
          TA1 = (byte)adapter.GetByte(); // first memory address byte T7:0
          TA2 = (byte)adapter.GetByte(); // second memory byte T15:8 of the address to which to write
