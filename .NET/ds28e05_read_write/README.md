@@ -47,6 +47,9 @@ The top button is the “read” button.  When clicked, the program discovers al
 ### Writing
 The “Write” button, when clicked, discovers all DS28E05 1-Wire devices and attempts to take the hexadecimal contents that the user places in the middle text box labeled “Input Hex to Write All Devices”, converts the text into an array of bytes and writes this array to all DS28E05 devices found, one at a time. See Figure 4 for the Main Window, the button labeled “Write” and the “Input Hex to Write to All Devices" text box.
 
+### Write Settings
+The “Write Settings” button, when clicked, discovers all DS28E05 1-Wire devices and attempts to take the selections in the "Page Settings" box, convert them to 4 bytes (nybble by nybble) and writes these bytes to all DS28E05 devices found, one at a time. Each of the 7 pages of DS28E05 user memory can be set to write protection (no writes can occur), eprom emulation (the bits on the page can only be written from 1 to 0), and open (the user memory can be freely read and written). See Figure 4 for the Main Window, the button labeled “Write Settings” inside the group box labeled "Page Settings". The pages are numbered 0 through 6 with the last page labeled "PP A-D" which stands for Page Protection A-D (the four page protection bytes). The "PP A-D" will either lock the 4 page protection bytes or keep them open (unlocked). Warning:  When Page Protection bytes are written to from "Open" to another setting like "Write Protect" or "Eprom Emulation," the setting is PERMANENT. Switching from "Write Protect" to "Eprom Emulation" or "Open" is not possible (this is by design).
+
 ### Other GUI Functions 
 1. The Speed group box.  This has two radio buttons that allow the user to choose which 1-Wire speed to choose:  Standard or Overdrive. Standard allows for much longer lines but "Overdrive" can speed up 1-Wire reads and writes.
 2. 1-Wire Activity text box.  The text box labeled “1-Wire Activity Log” is the bottom text box.  This displays the 1-Wire activity during the read and write events.  Specifically, it shows the serial numbers of all 1-Wire devices found.  If they are DS28E05 devices, then the text box displays a message that reading is occurring or that writing is occurring.
@@ -57,4 +60,6 @@ The “Write” button, when clicked, discovers all DS28E05 1-Wire devices and a
 ## Limitations
 -	Testing was done only on Windows 10 x64.
 -	Only DS28E05 devices were tested.
+-   No warnings are presented to let the user know if a page could not be written.  It is recommended to read back the contents after a write to visually verify.
+-   Only the DS9481R-3C7 1-Wire PC adapter can be safely used to read/write the DS28E05.
 
